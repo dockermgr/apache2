@@ -19,17 +19,17 @@ dockermgr update apache2
 ## Install and run container
   
 ```shell
-mkdir -p "$HOME/.local/share/srv/docker/apache2/rootfs"
+mkdir -p "$HOME/.local/share/srv/docker/apache2/volumes"
 git clone "https://github.com/dockermgr/apache2" "$HOME/.local/share/CasjaysDev/dockermgr/apache2"
-cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/apache2/rootfs/." "$HOME/.local/share/srv/docker/apache2/rootfs/"
+cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/apache2/volumes/." "$HOME/.local/share/srv/docker/apache2/volumes/"
 docker run -d \
 --restart always \
 --privileged \
 --name casjaysdevdocker-apache2 \
 --hostname apache2 \
 -e TZ=${TIMEZONE:-America/New_York} \
--v "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/rootfs/data:/data:z" \
--v "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/rootfs/config:/config:z" \
+-v "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/volumes/data:/data:z" \
+-v "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/volumes/config:/config:z" \
 -p 80:80 \
 casjaysdevdocker/apache2:latest
 ```
@@ -46,8 +46,8 @@ services:
       - TZ=America/New_York
       - HOSTNAME=apache2
     volumes:
-      - "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/rootfs/data:/data:z"
-      - "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/rootfs/config:/config:z"
+      - "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/volumes/data:/data:z"
+      - "$HOME/.local/share/srv/docker/casjaysdevdocker-apache2/volumes/config:/config:z"
     ports:
       - 80:80
     restart: always
